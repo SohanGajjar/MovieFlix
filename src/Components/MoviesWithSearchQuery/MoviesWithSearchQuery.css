@@ -1,0 +1,11 @@
+.movie-grid
+{
+  display: grid;
+  gap: 20px; /* Adjust gap between cards */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust minmax value as needed */
+}
+
+.empty-div
+{
+  height: 90px;
+}

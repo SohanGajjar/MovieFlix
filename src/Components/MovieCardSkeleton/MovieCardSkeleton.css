@@ -1,0 +1,75 @@
+/* MovieCardSkeleton.css */
+
+.movie-card-skeleton
+{
+  background-color: #1c1c1c;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-image-container
+{
+  height: 400px;
+  overflow: hidden;
+}
+
+.skeleton-image
+{
+  background-color: #f0f0f0;
+  height: 400px;
+  width: 100%;
+}
+
+.skeleton-details
+{
+  background-color: #1c1c1c;
+  padding: 16px;
+}
+
+.skeleton-details-top
+{
+  margin-bottom: 12px;
+}
+
+.skeleton-title
+{
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  height: 20px;
+  margin-bottom: 8px;
+  width: 80%;
+}
+
+.skeleton-genres
+{
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  height: 15px;
+  width: 100%;
+}
+
+.skeleton-details-bottom
+{
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.skeleton-button
+{
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  height: 30px;
+  width: 100px;
+}
+
+.skeleton-rating
+{
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  height: 20px;
+  width: 40px;
+}

@@ -1,0 +1,56 @@
+.app-container
+{
+  display: flex;
+  height: 100%;
+}
+
+.drawer
+{
+  height: 100%;
+  overflow-x: hidden;
+  transition: 0.5s;
+  width: 0;
+}
+
+.drawer.open
+{
+  width: 20%;
+}
+
+.content
+{
+  overflow: hidden;
+  transition: margin-left 0.5s;
+  width: 100%;
+}
+
+.content.shift
+{
+  margin-left: 20%;
+}
+
+.content-container
+{
+  height: 100%;
+  transition: margin-left 0.5s;
+  width: 100%;
+}
+
+.content-container.shift
+{
+  margin-left: -20%;
+}
+
+@media (max-width: 767px)
+{
+  .drawer.open
+  {
+    left: 0;
+    width: 100%;
+  }
+
+  .genre-grid
+  {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}

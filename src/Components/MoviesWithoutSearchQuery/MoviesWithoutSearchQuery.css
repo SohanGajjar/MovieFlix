@@ -1,0 +1,17 @@
+.movies-by-years
+{
+  height: 100%;
+  width: 100%;
+}
+
+.isLoading
+{
+  background-color: red;
+  height: 100px;
+  width: 100px;
+}
+
+.empty-div
+{
+  height: 90px;
+}
