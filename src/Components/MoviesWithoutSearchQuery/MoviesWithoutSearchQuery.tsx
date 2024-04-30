@@ -14,18 +14,10 @@ const MoviesWithoutSearchQuery = ({
   filteredGenreIdSet
 }: MoviesWithoutSearchQueryProps) =>
 {
-  const [years, setYears] = useState<number[]>([
-    2012,
-    2013,
-    2014,
-    2015,
-    2016
-  ]);
-
+  const [years, setYears] = useState<number[]>([2012, 2013, 2014, 2015, 2016]);
   const [yearsBefore, setYearsBefore] = useState<number[]>([2010, 2011]);
   const [showUpArrow, setShowUpArrow] = useState(false);
-
-  console.log("===yearsBefore", yearsBefore);
+  const [isAboveEmptyDiv, setIsAboveEmptyDiv] = useState(true);
 
   const emptyDivRef = useRef<HTMLDivElement>(null);
 
@@ -48,24 +40,22 @@ const MoviesWithoutSearchQuery = ({
     const scrollTop = document.documentElement?.scrollTop;
     const clientHeight = document.documentElement?.clientHeight;
 
-    console.log("===clientHeight", {
-      scrollHeight,
-      scrollTop,
-      clientHeight
-    });
-
-    if(scrollHeight === undefined
-      || scrollTop === undefined
-      || clientHeight === undefined)
+    if(scrollHeight === undefined || scrollTop === undefined || clientHeight === undefined)
     {
       console.warn("Unable to access scroll properties.");
       return;
     }
 
+    const emptyDivRect = emptyDivRef.current?.getBoundingClientRect();
+    if(emptyDivRect)
+    {
+      setIsAboveEmptyDiv(emptyDivRect.top > 0);
+    }
+
     const nearTop = scrollTop < 200;
     const nearBottom = scrollTop + clientHeight >= scrollHeight - 200;
 
-    console.log("===nearTop", nearTop);
+    setShowUpArrow(scrollTop > 0);
 
     if(nearTop)
     {
@@ -73,16 +63,12 @@ const MoviesWithoutSearchQuery = ({
 
       if(minYear > 1800)
       {
-        const nextYears = Array.from(
-          {length: 5},
-          (_, i) => minYear - i - 1
-        ).reverse();
+        const nextYears = Array.from({length: 5}, (_, i) => minYear - i - 1).reverse();
         setYearsBefore((prevValues) =>
         {
           const mergedValues = [...nextYears, ...prevValues];
           return Array.from(new Set(mergedValues));
         });
-
       }
     }
 
@@ -93,17 +79,10 @@ const MoviesWithoutSearchQuery = ({
 
       if(maxYear < currentYear)
       {
-        const nextYears = Array.from(
-          {length: currentYear - maxYear},
-          (_, i) => maxYear + i + 1
-        );
+        const nextYears = Array.from({length: currentYear - maxYear}, (_, i) => maxYear + i + 1);
         setYears((prevValues) => [...prevValues, ...nextYears]);
       }
     }
-
-    // Update showUpArrow state based on scroll position
-    setShowUpArrow(scrollTop > 200);
-
   }, [years, yearsBefore]);
 
   useEffect(() =>
@@ -147,15 +126,17 @@ const MoviesWithoutSearchQuery = ({
           filteredGenreIdSet={filteredGenreIdSet}
         />
       ))}
-      <button onClick={handleScrollToTop}>go to the top</button>
+      <button onClick={handleScrollToTop}>
+        {isAboveEmptyDiv ? "⬇️ Scroll to Start" : "⬆️ Scroll to Top"}
+      </button>
       {showUpArrow && (
-        <div
-          className="up-arrow"
+        <button
+          className={`scroll-to-top-btn ${showUpArrow ? "show" : ""}`}
           onClick={handleScrollToTop}
-          title="Scroll to Top"
+          title={isAboveEmptyDiv ? "Scroll to Start" : "Scroll to Top"}
         >
-          &#8679;
-        </div>
+          {isAboveEmptyDiv ? "⬇️" : "⬆️"}
+        </button>
       )}
     </div>
   );
