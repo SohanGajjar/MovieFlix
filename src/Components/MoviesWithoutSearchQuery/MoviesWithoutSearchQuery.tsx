@@ -1,5 +1,6 @@
 import {useState} from "react";
 import React, {useCallback, useEffect, useRef} from "react";
+import {FaArrowDown, FaArrowUp} from "react-icons/fa";
 import {Genre} from "../../Types/Types";
 import MoviesPerYear from "../MoviesPerYear/MoviePerYear";
 import "./MoviesWithoutSearchQuery.css";
@@ -18,6 +19,7 @@ const MoviesWithoutSearchQuery = ({
   const [yearsBefore, setYearsBefore] = useState<number[]>([2010, 2011]);
   const [showUpArrow, setShowUpArrow] = useState(false);
   const [isAboveEmptyDiv, setIsAboveEmptyDiv] = useState(true);
+  const [showArrows, setShowArrows] = useState(false);
 
   const emptyDivRef = useRef<HTMLDivElement>(null);
 
@@ -49,6 +51,14 @@ const MoviesWithoutSearchQuery = ({
     const emptyDivRect = emptyDivRef.current?.getBoundingClientRect();
     if(emptyDivRect)
     {
+      if(emptyDivRect.top > 800 || emptyDivRect.top < -800)
+      {
+        setShowArrows(true);
+      }
+      else
+      {
+        setShowArrows(false);
+      }
       setIsAboveEmptyDiv(emptyDivRect.top > 0);
     }
 
@@ -129,13 +139,13 @@ const MoviesWithoutSearchQuery = ({
       <button onClick={handleScrollToTop}>
         {isAboveEmptyDiv ? "⬇️ Scroll to Start" : "⬆️ Scroll to Top"}
       </button>
-      {showUpArrow && (
+      {showUpArrow && showArrows && (
         <button
           className={`scroll-to-top-btn ${showUpArrow ? "show" : ""}`}
           onClick={handleScrollToTop}
           title={isAboveEmptyDiv ? "Scroll to Start" : "Scroll to Top"}
         >
-          {isAboveEmptyDiv ? "⬇️" : "⬆️"}
+          {isAboveEmptyDiv ? <FaArrowDown /> : <FaArrowUp />}
         </button>
       )}
     </div>
